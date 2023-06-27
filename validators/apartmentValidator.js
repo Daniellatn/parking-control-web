@@ -11,6 +11,9 @@ const apartmentValidator = {
   },
   block: {
     required: requiredField.required,
+  },
+  resident: {
+    required: requiredField.required,
   }
 }
 

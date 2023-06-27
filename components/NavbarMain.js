@@ -15,12 +15,6 @@ const NavbarMain = () => {
             <Nav.Link href="/resident">Morador</Nav.Link>
             <Nav.Link href="/parking">Vaga</Nav.Link>
           </Nav>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              Olá, Sindico <a href="#login">Sair</a>
-            </Navbar.Text>
-          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

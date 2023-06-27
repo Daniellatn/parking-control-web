@@ -14,6 +14,7 @@ const index = () => {
 
   const [apartment, setapartment] = useState([])
   const [block, setblock] = useState([])
+  const [resident, setresident] = useState([])
   const [show, setShow] = useState(false)
 
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm()
@@ -21,11 +22,18 @@ const index = () => {
   useEffect(() => {
     getAll()
     getAllBlock()
+    getAllResident()
   }, [])
 
   function getAll() {
     axios.get('/api/apartment').then(result => {
       setapartment(result.data)
+    })
+  }
+
+  function getAllResident() {
+    axios.get('/api/resident').then(result => {
+      setresident(result.data)
     })
   }
 
@@ -60,6 +68,7 @@ const index = () => {
       amountResidents: data.amountResidents,
       floor: data.floor,
       block: data.block,
+      resident: data.resident
     }
     axios.post('/api/apartment', dataApi).then(() => {
       getAll()
@@ -108,7 +117,7 @@ const index = () => {
               <td className="text-center">{item.floor}</td>
               <td className="text-center">{item.block}</td>
               <td className="text-center">{item.number}</td>
-              <td className="text-center">Maria</td>
+              <td className="text-center">{item.resident}</td>
             </tr>
           ))}
         </tbody>
@@ -151,6 +160,19 @@ const index = () => {
               {
                 errors.block &&
                 <small className='text-danger'>{errors.block.message}</small>
+              }
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="resident">
+              <Form.Label>Morador</Form.Label>
+              <Form.Select id="selectBlock" {...register('resident', apartmentValidator.resident)}>
+                <option value="">Selecione</option>
+                {resident.map((item) => (
+                  <option key={item.id} value={item.nameComplete}>{item.nameComplete}</option>
+                ))}
+              </Form.Select>
+              {
+                errors.resident &&
+                <small className='text-danger'>{errors.resident.message}</small>
               }
             </Form.Group>
           </Form>

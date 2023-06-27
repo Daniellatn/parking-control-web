@@ -62,6 +62,7 @@ const index = () => {
           const dataApi = {
             name: data.name,
             lastName: data.lastName,
+            nameComplete: data.name + " " +  data.lastName,
             cpf: data.cpf,
             rg: data.rg,
             email: data.email,
@@ -110,7 +111,7 @@ const index = () => {
             <Card className="mb-3">
               <Card.Img variant="top" width={75} height={250} src={item.imageUrl} />
               <Card.Body>
-                <Card.Title className='text-center'>{item.name + " " + item.lastName}</Card.Title>
+                <Card.Title className='text-center'>{item.nameComplete}</Card.Title>
                 <p><strong> CPF: </strong> {item.cpf} <strong> RG: </strong>{item.rg} </p>
                 <p><strong> E-mail: </strong> {item.email}</p>
                 <p><strong> Telefone: </strong> {item.cellphone}</p>
