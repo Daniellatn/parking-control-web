@@ -20,6 +20,9 @@ const vehicleValidator = {
   },
   mark: {
     required: requiredField.required,
+  },
+  image: {
+    required: requiredField.required,
   }
 }
 

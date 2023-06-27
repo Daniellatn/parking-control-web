@@ -31,7 +31,9 @@ const index = () => {
 
   function getAllBlock() {
     axios.get('/api/block').then(result => {
-      setblock(result.data)
+      const listBlock = result.data
+      listBlock.sort((a, b) => a.block > b.block ? 1 : -1)
+      setblock(listBlock)
     })
   }
 
@@ -120,7 +122,7 @@ const index = () => {
           <Form name='formApartment'>
             <Form.Group className="mb-3" controlId="number" >
               <Form.Label>Número apartamento</Form.Label>
-              <Form.Control type="text" mask="9999" {...register('number', apartmentValidator.plate)} onChange={handleChange} />
+              <Form.Control type="text" mask="9999" {...register('number', apartmentValidator.number)} onChange={handleChange} />
               {
                 errors.number &&
                 <small className='text-danger'>{errors.number.message}</small>

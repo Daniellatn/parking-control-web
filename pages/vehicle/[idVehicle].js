@@ -196,7 +196,11 @@ const formEditVehicle = () => {
             <Row>
               <Form.Group className="mb-3" controlId="image">
                 <Form.Label>Imagem</Form.Label>
-                <Form.Control type="file" {...register('image')} />
+                <Form.Control type="file" {...register('image', vehicleValidator.image)} />
+                {
+                errors.image &&
+                <small className='text-danger'>{errors.image.message}</small>
+              }
               </Form.Group>
             </Row>
 

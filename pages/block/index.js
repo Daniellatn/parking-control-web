@@ -23,7 +23,9 @@ const index = () => {
 
   function getAll() {
     axios.get('/api/block').then(result => {
-      setblock(result.data)
+      const listBlock = result.data
+      listBlock.sort((a, b) => a.block > b.block ? 1 : -1)
+      setblock(listBlock)
     })
   }
 

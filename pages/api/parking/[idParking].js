@@ -12,12 +12,8 @@ export default function handler(req, res) {
   } else if (req.method === 'PUT') {
     const data = req.body
 
-    return updateDoc(doc(dataBaseFirestore, 'block/' + id), data).then(result => {
+    return updateDoc(doc(dataBaseFirestore, 'parking/' + id), data).then(result => {
       return res.status(200).json(data)
-    })
-  } else if (req.method === 'DELETE') {
-    return deleteDoc(doc(dataBaseFirestore, 'block', id)).then(result => {
-      return res.status(200).json({ ok: true })
     })
   } else {
     res.status(405).json({ error: "Método não permitido" });

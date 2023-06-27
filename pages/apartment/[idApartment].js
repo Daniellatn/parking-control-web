@@ -21,7 +21,6 @@ const formEditApartment = () => {
     if (query.idApartment) {
       axios.get('/api/apartment/' + query.idApartment).then(result => {
         const apartment = result.data
-        console.log('Aqui', result.data)
         for (let attribute in apartment) {
           setValue(attribute, apartment[attribute])
         }
@@ -32,7 +31,9 @@ const formEditApartment = () => {
 
   function getAllBlock() {
     axios.get('/api/block').then(result => {
-      setblock(result.data)
+      const listBlock = result.data
+      listBlock.sort((a, b) => a.block > b.block ? 1 : -1)
+      setblock(listBlock)
     })
   }
 
@@ -44,7 +45,14 @@ const formEditApartment = () => {
     setValue(name, mask(value, maskField))
   }
 
-  function save(data) {
+  function save(dataApi) {
+    const data = {
+      unit: dataApi.block + dataApi.number,
+      number: dataApi.number,
+      amountResidents: dataApi.amountResidents,
+      floor: dataApi.floor,
+      block: dataApi.block,
+    }
     axios.put('/api/apartment/' + query.idApartment, data)
     push('/apartment')
   }
@@ -64,7 +72,7 @@ const formEditApartment = () => {
               <Col>
                 <Form.Group className="mb-3" controlId="number" >
                   <Form.Label>Número apartamento</Form.Label>
-                  <Form.Control type="text" mask="9999" {...register('number', apartmentValidator.plate)} onChange={handleChange} />
+                  <Form.Control type="text" mask="9999" {...register('number', apartmentValidator.number)} onChange={handleChange} />
                   {
                     errors.number &&
                     <small className='text-danger'>{errors.number.message}</small>

@@ -8,7 +8,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { Breadcrumb, Button, Form, Modal, ProgressBar, Table } from 'react-bootstrap'
+import { Breadcrumb, Button, Card, Col, Form, Modal, ProgressBar, Row, Table } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { FiArrowLeftCircle, FiEdit, FiPlusCircle, FiSave, FiTrash2 } from 'react-icons/fi'
 import { mask } from 'remask'
@@ -17,9 +17,9 @@ const index = () => {
 
   const [vehicle, setvehicle] = useState([])
   const [mark, setMark] = useState([])
-  const [imgURL, setImgURL] = useState("");
-  const [progress, setProgress] = useState(0);
-  const [show, setShow] = useState(false);
+  const [imgURL, setImgURL] = useState("")
+  const [progress, setProgress] = useState(0)
+  const [show, setShow] = useState(false)
 
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm()
 
@@ -34,7 +34,7 @@ const index = () => {
   }
 
   function getAllMark(type) {
-    if(type == "") {
+    if (type == "") {
       setMark([])
     } else {
       apiVehicleMark.get('/' + type + '/marcas').then(result => {
@@ -80,8 +80,7 @@ const index = () => {
             color: data.color,
             mark: data.mark,
             imageUrl: url,
-          };
-
+          }
           axios
             .post("/api/vehicle", dados)
             .then(() => {
@@ -92,7 +91,7 @@ const index = () => {
         });
       }
     );
-  };
+  }
 
   function remove(id) {
     if (confirm('Deseja relamente excluir?')) {
@@ -112,8 +111,6 @@ const index = () => {
   function handleChangeMark(event) {
     const value = event.target.value
 
-    console.log('value', value)
-
     getAllMark(value)
   }
 
@@ -123,38 +120,36 @@ const index = () => {
         <Breadcrumb.Item href="/">Inicio</Breadcrumb.Item>
         <Breadcrumb.Item active>Veículos</Breadcrumb.Item>
       </Breadcrumb>
+
       <Button onClick={handleShow} className='btn btn-success my-3'> <FiPlusCircle /> Novo</Button>
-      <Table striped bordered hover>
-        <thead>
-          <tr className="text-center">
-            <th>#</th>
-            <th>Placa</th>
-            <th>Modelo</th>
-            <th>Ano</th>
-            <th>Cor</th>
-            <th>Marca</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vehicle.map((item) => (
-            <tr key={item.id}>
-              <td className='d-flex justify-content-evenly'>
-                <Link href={'/vehicle/' + item.id} className='p-0'>
-                  <FiEdit className="text-primary" />
-                </Link>
-                <span>
-                  <FiTrash2 onClick={() => remove(item.id)} className="text-danger" />
-                </span>
-              </td>
-              <td className="text-center">{item.plate}</td>
-              <td className="text-center">{item.model}</td>
-              <td className="text-center">{item.year}</td>
-              <td className="text-center">{item.color}</td>
-              <td className="text-center">{item.mark}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+
+      <Row md={3}>
+        {vehicle.map(item => (
+          <Col key={item.id} className='mb-3'>
+            <Card className="mb-3">
+              <Card.Img variant="top" width={286} height={186} src={item.imageUrl} />
+              <Card.Body>
+                <Card.Title className='text-center'>{item.plate}</Card.Title>
+                <p><strong> Modelo: </strong>  {item.model}</p>
+                <p><strong> Marca: </strong> {item.mark}</p>
+                <p><strong> Ano: </strong> {item.year}</p>
+                <p><strong> Cor: </strong> {item.color}</p>
+
+                <div className='text-center my-2'>
+                  <Button className='p-2 px-4 align-items-center' variant='danger' onClick={() => remove(item.id)}>
+                    <FiTrash2 className='me-2 mb-1' />
+                    Excluir
+                  </Button>
+                  <Link className='btn btn-success p-2 px-4 ms-2' href={'/vehicle/' + item.id}>
+                    <FiEdit className='me-2 mb-1' />
+                    Editar
+                  </Link>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -163,7 +158,7 @@ const index = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="type" >
-              <Form.Label>Tipo Veiculo</Form.Label>
+              <Form.Label>Tipo Veiculo</Form.Label><br></br>
               <Form.Select id="selectType" {...register('type', vehicleValidator.type)} onChange={handleChangeMark}>
                 <option key={0} value="">Selecione</option>
                 <option key={1} value="carros">Carro</option>
@@ -221,7 +216,11 @@ const index = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="image">
               <Form.Label>Imagem</Form.Label>
-              <Form.Control type="file" {...register('image')} />
+              <Form.Control type="file" {...register('image', vehicleValidator.image)} />
+              {
+                errors.image &&
+                <small className='text-danger'>{errors.image.message}</small>
+              }
             </Form.Group>
           </Form>
           {!imgURL && <ProgressBar animated now={progress} label={`${progress}%`} />}

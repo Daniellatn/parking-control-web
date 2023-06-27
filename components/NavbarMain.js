@@ -9,16 +9,16 @@ const NavbarMain = () => {
         <Container>
           <Navbar.Brand href="/">Parking Control Web</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/apartment">Apartamento</Nav.Link>
             <Nav.Link href="/block">Bloco</Nav.Link>
+            <Nav.Link href="/apartment">Apartamento</Nav.Link>
             <Nav.Link href="/vehicle">Veículo</Nav.Link>
+            <Nav.Link href="/resident">Morador</Nav.Link>
             <Nav.Link href="/parking">Vaga</Nav.Link>
-            <Nav.Link href="#pricing">Morador</Nav.Link>
           </Nav>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
-              Olá, Nome <a href="#login">Sair</a>
+              Olá, Sindico <a href="#login">Sair</a>
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
