@@ -9,13 +9,13 @@ try {
   app = getApp()
 } catch (error) {
   const firebaseConfig = {
-    apiKey: "AIzaSyDOQRzWEFs5CyvFNKM5cqUdXPGGvkMGm94",
-    authDomain: "parking-control-a0c1d.firebaseapp.com",
-    databaseURL: "https://parking-control-a0c1d-default-rtdb.firebaseio.com",
-    projectId: "parking-control-a0c1d",
-    storageBucket: "parking-control-a0c1d.appspot.com",
-    messagingSenderId: "872207620135",
-    appId: "1:872207620135:web:6f2704c2c2bb9556cb5602"
+    apiKey: process.env.PUBLIC_NEXT_FIREBASE_API_KEY,
+    authDomain: process.env.PUBLIC_NEXT_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.PUBLIC_NEXT_FIREBASE_DATABASE_URL,
+    projectId: process.env.PUBLIC_NEXT_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.PUBLIC_NEXT_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.PUBLIC_NEXT_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.PUBLIC_NEXT_FIREBASE_APP_ID
   };
 
   app = initializeApp(firebaseConfig)
